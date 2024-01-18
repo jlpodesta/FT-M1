@@ -34,10 +34,10 @@ LinkedList.prototype.add = function (value) {
 }
 LinkedList.prototype.remove = function () {
   var current = this.head
-  if (current) {
+  if (!current) {
     return null
   }
-  if (current.next) {
+  if (!current.next) {
     this.head = null
     return current.value
   }
@@ -45,7 +45,7 @@ LinkedList.prototype.remove = function () {
     current = current.next
   }
   let aux = current.next.value
-  current.nex = null
+  current.next = null
   return aux
 }
 LinkedList.prototype.search = function (parameter) {
@@ -86,19 +86,21 @@ function HashTable() {
 }
 
 HashTable.prototype.hash = function (string) {
-  var sum = 0
-  for (let i = 0; string.length; i++) {
-    sum += string.charCodeAt(i)
+  var suma = 0
+  for (let i = 0; i < string.length; i++) {
+    suma += string.charCodeAt(i)
   }
-  return sum % this.numBuckets
+  return suma % this.numBuckets
 }
 
 HashTable.prototype.set = function(key, value){
-  let index = this.hash(key)
-  if(this.buckets[index]){
-    this.buckets[index] = {}
-    this.buckets[index][key] = value
+  if(typeof key != "string"){
+    throw new TypeError("error")
   }
+  var index = this.hash(key)
+  if(!this.buckets[index]) {
+    this.buckets[index] = {}}
+    this.buckets[index][key] = value
 }
 HashTable.prototype.get = function(key){
   var index = this.hash(key)
@@ -106,9 +108,12 @@ HashTable.prototype.get = function(key){
 }
 HashTable.prototype.hasKey = function(key){
   var index = this.hash(key)
-  if(this.buckets[index][key]) = value
+  if(this.buckets[index][key]) {
+    return true
+  } else {
+    return false
 }
-
+}
 // No modifiquen nada debajo de esta linea
 // --------------------------------
 
